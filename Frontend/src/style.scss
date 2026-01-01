@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:        #05010f;
+  --surface:   #0f0a20;
+  --card:      #13102b;
+  --border:    rgba(255,255,255,0.06);
+  --p1:        #7c3aed;
+  --p2:        #a855f7;
+  --p3:        #c084fc;
+  --pink:      #ec4899;
+  --cyan:      #22d3ee;
+  --green:     #4ade80;
+  --orange:    #fb923c;
+  --red:       #f87171;
+  --text:      #f4f0ff;
+  --muted:     #6b6a8a;
+  --dim:       #2e2b4a;
+  --font:      'Inter', system-ui, sans-serif;
+  --radius:    14px;
+  --radius-sm: 8px;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(124,58,237,.4); border-radius: 99px; }
+
+a { color: var(--p3); text-decoration: none; transition: color .2s; }
+a:hover { color: #fff; }
+
+/* ── Noise texture overlay ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: .4;
+}
+
+/* ── Loading screen ── */
+.loading-screen {
+  height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1.5rem;
+
+  .spinner {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 3px solid var(--dim);
+    border-top-color: var(--p2);
+    animation: spin .7s linear infinite;
+  }
+
+  p { color: var(--muted); font-size: .9rem; letter-spacing: .05em; }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Glow utility ── */
+.glow {
+  filter: drop-shadow(0 0 12px rgba(168,85,247,.5));
+}
