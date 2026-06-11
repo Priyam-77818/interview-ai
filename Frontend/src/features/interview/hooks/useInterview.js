@@ -1,17 +1,21 @@
 import { getAllInterviewReports, generateInterviewReport, getInterviewReportById, generateResumePdf, deleteInterviewReport, scoreAnswer } from "../services/interview.api"
 import { useContext, useEffect } from "react"
 import { InterviewContext } from "../interview.context"
-import { useParams } from "react-router"
 import { useToast } from "../../../components/Toast"
 
 export const useInterview = () => {
     const context = useContext(InterviewContext)
-    const { interviewId } = useParams()
-    const { toast } = useToast()
+    const toastContext = useToast()
+    const toast = toastContext?.toast || (() => {})
 
     if (!context) throw new Error("useInterview must be used within an InterviewProvider")
 
     const { loading, setLoading, report, setReport, reports, setReports } = context
+
+    // get interviewId safely from URL without useParams crash
+    const interviewId = typeof window !== 'undefined'
+        ? window.location.pathname.split('/interview/')[1] || null
+        : null
 
     const generateReport = async ({ jobDescription, selfDescription, resumeFile }) => {
         setLoading(true)
