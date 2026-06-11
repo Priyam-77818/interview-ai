@@ -50,9 +50,10 @@ export const useInterview = () => {
         setLoading(true)
         try {
             const response = await getAllInterviewReports()
-            setReports(response.interviewReports)
-            return response.interviewReports
+            setReports(response?.interviewReports || [])
+            return response?.interviewReports || []
         } catch (error) {
+            setReports([])
             toast('Could not load reports', 'error')
             return []
         } finally {
